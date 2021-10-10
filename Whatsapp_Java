@@ -1,0 +1,65 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions; 
+
+public class WhatsappOnline {
+
+	public static void main(String[] args) throws InterruptedException, IOException {
+		
+		
+		//String profilename = "Helpline";
+		String profilename = "Annaya";
+		 System.setProperty("webdriver.chrome.driver", "C:\\eclipse\\Drivers\\Chrome\\chromedriver.exe");  
+		 ChromeOptions options = new ChromeOptions();
+		 options.addArguments("user-data-dir=C:\\Users\\venkatm\\AppData\\Local\\Google\\Chrome\\User Data\\Whatsapp");
+		 ChromeDriver driver = new ChromeDriver(options);				  
+		 driver.navigate().to("https://web.whatsapp.com");  
+		 driver.manage().window().maximize(); 
+		 
+		 Thread.sleep(15000);
+		 
+		 driver.findElementByXPath("//div[@role='textbox']").click();
+		 driver.findElementByXPath("//div[@role='textbox']").sendKeys(profilename);
+		 Thread.sleep(3000);
+		 driver.findElementByXPath("//span[@title='"+profilename+"']").click();
+		 Thread.sleep(3000);
+		 int IsOnline = driver.findElementsByXPath("//span[@title='online']").size();
+		 for (int i=0;i==0;) 
+		 {
+		 
+			 //System.out.println("1");
+			 while (IsOnline==0)
+			 {
+				 //System.out.println("2");
+				 IsOnline = driver.findElementsByXPath("//span[@title='online']").size();
+			 }
+			//Online time
+			 DateTimeFormatter myDate = DateTimeFormatter.ofPattern("M/dd/yyyy");  
+			 DateTimeFormatter myOnlinetime = DateTimeFormatter.ofPattern("HH:mm:ss"); 
+			 String myDate1 =myDate.format(LocalDateTime.now());  
+			 String myOnlinetime1= myOnlinetime.format(LocalDateTime.now()); 
+			//System.out.print("Online time "+myOnlinetime1); 		 
+			 while (IsOnline>=1)
+			 {
+				 //System.out.println("3"); 
+				 IsOnline = driver.findElementsByXPath("//span[@title='online']").size();
+			 }
+			 //System.out.print("Online time "+myOnlinetime1); 	
+			 //Offline time
+			 DateTimeFormatter myOfflinetime = DateTimeFormatter.ofPattern("HH:mm:ss"); 
+			 String myOfflinetime1 = myOfflinetime.format(LocalDateTime.now()); 
+			 String filename= "C:\\Users\\venkatm\\Downloads\\whatsapp.csv";
+			 FileWriter fw = new FileWriter(filename,true); //the true will append the new data
+			 fw.write(myDate1+","+myOnlinetime1+","+myOfflinetime1+"\r");//appends the string to the file
+			 fw.close();
+		
+		 }    
+        
+	}
+
+}
