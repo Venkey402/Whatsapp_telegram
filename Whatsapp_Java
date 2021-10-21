@@ -2,61 +2,116 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions; 
 
-public class WhatsappOnline {
-
+public class WhatsappOnline_Dev {
+		
 	public static void main(String[] args) throws InterruptedException, IOException {
 		
+		//String profilename = "2_Relli";
+		String profilename = "5_Helpline";
+		//String profilename = "Home amma Airtel";
+		//String profilename = "Venkey402";
 		
-		//String profilename = "Helpline";
-		String profilename = "Annaya";
+		
+		String For_Which_Profile_Venkat_Appear_To_Be_Online = "2_Relli";
+		
+		
+		 String string19 = new String("19");
+		 String string20 = new String("20");
+		 String string21 = new String("21");
+		 String string22 = new String("22");
+		 String string23 = new String("23");
+		
+		String WhatsappAccount = "" ;
+		if (profilename.equals("2_Relli"))
+		{
+			WhatsappAccount = "Mine";
+		}
+		else if (profilename.equals("5_Helpline"))
+		{
+			WhatsappAccount = "Chinna";
+		}
+		else if (profilename.equals("Venkey402"))
+		{
+			WhatsappAccount = "AmmaAirtel";
+		}
+		/*--- Initiating the browser with the given whatsapp account ---*/	
+		
 		 System.setProperty("webdriver.chrome.driver", "C:\\eclipse\\Drivers\\Chrome\\chromedriver.exe");  
 		 ChromeOptions options = new ChromeOptions();
-		 options.addArguments("user-data-dir=C:\\Users\\venkatm\\AppData\\Local\\Google\\Chrome\\User Data\\Whatsapp");
+		 options.addArguments("user-data-dir=C:\\Users\\venkatm\\AppData\\Local\\Google\\Chrome\\User Data\\Whatsapp_"+WhatsappAccount);
 		 ChromeDriver driver = new ChromeDriver(options);				  
 		 driver.navigate().to("https://web.whatsapp.com");  
 		 driver.manage().window().maximize(); 
-		 
 		 Thread.sleep(15000);
+		 
+		 /*--- Searching for the given profile ---*/
 		 
 		 driver.findElementByXPath("//div[@role='textbox']").click();
 		 driver.findElementByXPath("//div[@role='textbox']").sendKeys(profilename);
 		 Thread.sleep(3000);
 		 driver.findElementByXPath("//span[@title='"+profilename+"']").click();
 		 Thread.sleep(3000);
+			
 		 int IsOnline = driver.findElementsByXPath("//span[@title='online']").size();
+		 
 		 for (int i=0;i==0;) 
 		 {
-		 
-			 //System.out.println("1");
+			 DateTimeFormatter RandHour = DateTimeFormatter.ofPattern("HH"); 
+			 String StrRandHour= RandHour.format(LocalDateTime.now()); 
+			
 			 while (IsOnline==0)
 			 {
-				 //System.out.println("2");
-				 IsOnline = driver.findElementsByXPath("//span[@title='online']").size();
-			 }
-			//Online time
+				 IsOnline = driver.findElementsByXPath("//span[@title='online']").size();	
+				 if ((profilename.equals(For_Which_Profile_Venkat_Appear_To_Be_Online))&&(StrRandHour.equals(string19)||StrRandHour.equals(string20)||StrRandHour.equals(string21)||StrRandHour.equals(string22)||StrRandHour.equals(string23)))
+				 {
+					 driver.findElementByXPath("//*[@id='main']/footer/div/div/div/div/div/div/div[@role='textbox']").click();
+					
+				 }
+			 } 
+			 
+			 /*--- Calculating starting of the online time ---*/
+			 
 			 DateTimeFormatter myDate = DateTimeFormatter.ofPattern("M/dd/yyyy");  
 			 DateTimeFormatter myOnlinetime = DateTimeFormatter.ofPattern("HH:mm:ss"); 
 			 String myDate1 =myDate.format(LocalDateTime.now());  
-			 String myOnlinetime1= myOnlinetime.format(LocalDateTime.now()); 
-			//System.out.print("Online time "+myOnlinetime1); 		 
+			 String myOnlinetime1= myOnlinetime.format(LocalDateTime.now()); 			 
+			 			 
 			 while (IsOnline>=1)
 			 {
-				 //System.out.println("3"); 
 				 IsOnline = driver.findElementsByXPath("//span[@title='online']").size();
+				 if (profilename.equals(For_Which_Profile_Venkat_Appear_To_Be_Online))
+				  {
+					 Random random = new Random();   
+					 boolean randbool=random.nextBoolean();  
+					 if (randbool)
+					 {
+						driver.findElementByXPath("//*[@id='main']/footer/div/div/div/div/div/div/div[@role='textbox']").click();
+					 }					 			 
+					 if ((StrRandHour.equals(string19)||StrRandHour.equals(string20)||StrRandHour.equals(string21)||StrRandHour.equals(string22)||StrRandHour.equals(string23)))
+					 {
+						 driver.findElementByXPath("//*[@id='main']/footer/div/div/div/div/div/div/div[@role='textbox']").click();
+					 }
+				 }
 			 }
-			 //System.out.print("Online time "+myOnlinetime1); 	
-			 //Offline time
+			 
+			 /*--- Calculating ending of the online time ---*/			 
 			 DateTimeFormatter myOfflinetime = DateTimeFormatter.ofPattern("HH:mm:ss"); 
 			 String myOfflinetime1 = myOfflinetime.format(LocalDateTime.now()); 
-			 String filename= "C:\\Users\\venkatm\\Downloads\\whatsapp.csv";
+			 String filename= "C:\\Users\\venkatm\\Downloads\\whatsapp_"+profilename+".csv";
 			 FileWriter fw = new FileWriter(filename,true); //the true will append the new data
 			 fw.write(myDate1+","+myOnlinetime1+","+myOfflinetime1+"\r");//appends the string to the file
 			 fw.close();
+			 String filename2= "C:\\Users\\venkatm\\Downloads\\whatsapp_"+profilename+"_WithAccount.csv";
+			 FileWriter fw2 = new FileWriter(filename2,true); //the true will append the new data
+			 fw2.write(myDate1+","+myOnlinetime1+","+myOfflinetime1+","+WhatsappAccount+"\r");//appends the string to the file
+			 fw2.close(); 			 
+			 System.out.println(profilename+" is whatsapp on :  " + myDate1+","+myOnlinetime1+","+myOfflinetime1+","+WhatsappAccount);
 		
 		 }    
         
