@@ -16,6 +16,7 @@ public class WhatsappOnline_Dev {
 		String profilename = "5_Helpline";
 		//String profilename = "Home amma Airtel";
 		//String profilename = "Venkey402";
+		//String profilename = "Annayya";
 		
 		
 		String For_Which_Profile_Venkat_Appear_To_Be_Online = "2_Relli";
@@ -28,17 +29,18 @@ public class WhatsappOnline_Dev {
 		 String string23 = new String("23");
 		
 		String WhatsappAccount = "" ;
-		if (profilename.equals("2_Relli"))
-		{
-			WhatsappAccount = "Mine";
-		}
-		else if (profilename.equals("5_Helpline"))
+		if (profilename.equals("5_Helpline"))
 		{
 			WhatsappAccount = "Chinna";
+		}
+		else if (profilename.equals("2_Relli"))
+		{
+			WhatsappAccount = "Mine";
 		}
 		else if (profilename.equals("Venkey402"))
 		{
 			WhatsappAccount = "AmmaAirtel";
+			WhatsappAccount = "Chinna";
 		}
 		/*--- Initiating the browser with the given whatsapp account ---*/	
 		
@@ -71,8 +73,9 @@ public class WhatsappOnline_Dev {
 				 if ((profilename.equals(For_Which_Profile_Venkat_Appear_To_Be_Online))&&(StrRandHour.equals(string19)||StrRandHour.equals(string20)||StrRandHour.equals(string21)||StrRandHour.equals(string22)||StrRandHour.equals(string23)))
 				 {
 					 driver.findElementByXPath("//*[@id='main']/footer/div/div/div/div/div/div/div[@role='textbox']").click();
-					
+					//System.out.println("Offline");
 				 }
+				 //System.out.println("Offline but not 12");
 			 } 
 			 
 			 /*--- Calculating starting of the online time ---*/
@@ -84,20 +87,13 @@ public class WhatsappOnline_Dev {
 			 			 
 			 while (IsOnline>=1)
 			 {
-				 IsOnline = driver.findElementsByXPath("//span[@title='online']").size();
-				 if (profilename.equals(For_Which_Profile_Venkat_Appear_To_Be_Online))
-				  {
-					 Random random = new Random();   
-					 boolean randbool=random.nextBoolean();  
-					 if (randbool)
-					 {
-						driver.findElementByXPath("//*[@id='main']/footer/div/div/div/div/div/div/div[@role='textbox']").click();
-					 }					 			 
-					 if ((StrRandHour.equals(string19)||StrRandHour.equals(string20)||StrRandHour.equals(string21)||StrRandHour.equals(string22)||StrRandHour.equals(string23)))
-					 {
-						 driver.findElementByXPath("//*[@id='main']/footer/div/div/div/div/div/div/div[@role='textbox']").click();
-					 }
+				 IsOnline = driver.findElementsByXPath("//span[@title='online']").size();	
+				 if ((profilename.equals(For_Which_Profile_Venkat_Appear_To_Be_Online))&&(StrRandHour.equals(string19)||StrRandHour.equals(string20)||StrRandHour.equals(string21)||StrRandHour.equals(string22)||StrRandHour.equals(string23)))
+				 {
+					 driver.findElementByXPath("//*[@id='main']/footer/div/div/div/div/div/div/div[@role='textbox']").click();
+					 //System.out.println("online");
 				 }
+				 //System.out.println("online but not 12");
 			 }
 			 
 			 /*--- Calculating ending of the online time ---*/			 
